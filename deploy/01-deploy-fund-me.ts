@@ -20,13 +20,15 @@ const deployFundMe: DeployFunction = async function (
     }
 
     log("Deploying FundMe and waiting for confirmations...")
+    const args = [ethUsdPriceFeedAddress]
     const fundMe = await deploy("FundMe", {
         from: deployer,
-        args: [ethUsdPriceFeedAddress],
+        args: args,
         log: true,
         // we need to wait if on a live network so we can verify properly
-        waitConfirmations: networkConfig[network.name].blockConfirmations || 0,
+        waitConfirmations: networkConfig[network.name].blockConfirmations || 1,
     })
+
     log(`FundMe deployed at ${fundMe.address}`)
     log("--------------------------------------------------")
 
@@ -34,7 +36,7 @@ const deployFundMe: DeployFunction = async function (
         !developmentChains.includes(network.name) &&
         process.env.ETHERSCAN_API_KEY
     ) {
-        await verify(fundMe.address, [ethUsdPriceFeedAddress])
+        await verify(fundMe.address, args)
     }
 }
 export default deployFundMe

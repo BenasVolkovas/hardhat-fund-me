@@ -3,6 +3,12 @@ pragma solidity ^0.8.9;
 
 import "@chainlink/contracts/src/v0.8/interfaces/AggregatorV3Interface.sol";
 
+error FundMe__NotOwner();
+
+/** @title A contract for crowd funding for
+ *  @notice This contract is a demo for crowd funding
+ *  @dev This implements price feed
+ */
 contract FundMe {
     mapping(address => uint256) public s_addressToAmountFunded;
     address[] public s_funders;
@@ -15,8 +21,16 @@ contract FundMe {
     }
 
     modifier onlyOwner() {
-        require(msg.sender == s_owner);
+        if (msg.sender != s_owner) revert FundMe__NotOwner();
         _;
+    }
+
+    receive() external payable {
+        fund();
+    }
+
+    fallback() external payable {
+        fund();
     }
 
     function fund() public payable {
@@ -69,7 +83,6 @@ contract FundMe {
     function cheaperWithdraw() public payable onlyOwner {
         payable(msg.sender).transfer(address(this).balance);
         address[] memory funders = s_funders;
-        // mappings can't be in memory, sorry!
         for (
             uint256 funderIndex = 0;
             funderIndex < funders.length;
