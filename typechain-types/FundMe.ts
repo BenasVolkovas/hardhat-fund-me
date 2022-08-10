@@ -2,238 +2,266 @@
 /* tslint:disable */
 /* eslint-disable */
 import {
-  BaseContract,
-  BigNumber,
-  BigNumberish,
-  BytesLike,
-  CallOverrides,
-  ContractTransaction,
-  PayableOverrides,
-  PopulatedTransaction,
-  Signer,
-  utils,
-} from "ethers";
-import { FunctionFragment, Result } from "@ethersproject/abi";
-import { Listener, Provider } from "@ethersproject/providers";
-import { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from "./common";
+    BaseContract,
+    BigNumber,
+    BigNumberish,
+    BytesLike,
+    CallOverrides,
+    ContractTransaction,
+    PayableOverrides,
+    PopulatedTransaction,
+    Signer,
+    utils,
+} from "ethers"
+import { FunctionFragment, Result } from "@ethersproject/abi"
+import { Listener, Provider } from "@ethersproject/providers"
+import { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from "./common"
 
 export interface FundMeInterface extends utils.Interface {
-  contractName: "FundMe";
-  functions: {
-    "cheaperWithdraw()": FunctionFragment;
-    "fund()": FunctionFragment;
-    "getVersion()": FunctionFragment;
-    "s_addressToAmountFunded(address)": FunctionFragment;
-    "s_funders(uint256)": FunctionFragment;
-    "s_owner()": FunctionFragment;
-    "s_priceFeed()": FunctionFragment;
-    "withdraw()": FunctionFragment;
-  };
+    contractName: "FundMe"
+    functions: {
+        "cheaperWithdraw()": FunctionFragment
+        "fund()": FunctionFragment
+        "getAddressToAmountFunded(address)": FunctionFragment
+        "getFunder(uint256)": FunctionFragment
+        "getOwner()": FunctionFragment
+        "getPriceFeed()": FunctionFragment
+        "getVersion()": FunctionFragment
+        "mINIMUM_USD()": FunctionFragment
+        "withdraw()": FunctionFragment
+    }
 
-  encodeFunctionData(
-    functionFragment: "cheaperWithdraw",
-    values?: undefined
-  ): string;
-  encodeFunctionData(functionFragment: "fund", values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: "getVersion",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "s_addressToAmountFunded",
-    values: [string]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "s_funders",
-    values: [BigNumberish]
-  ): string;
-  encodeFunctionData(functionFragment: "s_owner", values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: "s_priceFeed",
-    values?: undefined
-  ): string;
-  encodeFunctionData(functionFragment: "withdraw", values?: undefined): string;
+    encodeFunctionData(
+        functionFragment: "cheaperWithdraw",
+        values?: undefined
+    ): string
+    encodeFunctionData(functionFragment: "fund", values?: undefined): string
+    encodeFunctionData(
+        functionFragment: "getAddressToAmountFunded",
+        values: [string]
+    ): string
+    encodeFunctionData(
+        functionFragment: "getFunder",
+        values: [BigNumberish]
+    ): string
+    encodeFunctionData(functionFragment: "getOwner", values?: undefined): string
+    encodeFunctionData(
+        functionFragment: "getPriceFeed",
+        values?: undefined
+    ): string
+    encodeFunctionData(
+        functionFragment: "getVersion",
+        values?: undefined
+    ): string
+    encodeFunctionData(
+        functionFragment: "mINIMUM_USD",
+        values?: undefined
+    ): string
+    encodeFunctionData(functionFragment: "withdraw", values?: undefined): string
 
-  decodeFunctionResult(
-    functionFragment: "cheaperWithdraw",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "fund", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "getVersion", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "s_addressToAmountFunded",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "s_funders", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "s_owner", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "s_priceFeed",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "withdraw", data: BytesLike): Result;
+    decodeFunctionResult(
+        functionFragment: "cheaperWithdraw",
+        data: BytesLike
+    ): Result
+    decodeFunctionResult(functionFragment: "fund", data: BytesLike): Result
+    decodeFunctionResult(
+        functionFragment: "getAddressToAmountFunded",
+        data: BytesLike
+    ): Result
+    decodeFunctionResult(functionFragment: "getFunder", data: BytesLike): Result
+    decodeFunctionResult(functionFragment: "getOwner", data: BytesLike): Result
+    decodeFunctionResult(
+        functionFragment: "getPriceFeed",
+        data: BytesLike
+    ): Result
+    decodeFunctionResult(
+        functionFragment: "getVersion",
+        data: BytesLike
+    ): Result
+    decodeFunctionResult(
+        functionFragment: "mINIMUM_USD",
+        data: BytesLike
+    ): Result
+    decodeFunctionResult(functionFragment: "withdraw", data: BytesLike): Result
 
-  events: {};
+    events: {}
 }
 
 export interface FundMe extends BaseContract {
-  contractName: "FundMe";
-  connect(signerOrProvider: Signer | Provider | string): this;
-  attach(addressOrName: string): this;
-  deployed(): Promise<this>;
+    contractName: "FundMe"
+    connect(signerOrProvider: Signer | Provider | string): this
+    attach(addressOrName: string): this
+    deployed(): Promise<this>
 
-  interface: FundMeInterface;
+    interface: FundMeInterface
 
-  queryFilter<TEvent extends TypedEvent>(
-    event: TypedEventFilter<TEvent>,
-    fromBlockOrBlockhash?: string | number | undefined,
-    toBlock?: string | number | undefined
-  ): Promise<Array<TEvent>>;
+    queryFilter<TEvent extends TypedEvent>(
+        event: TypedEventFilter<TEvent>,
+        fromBlockOrBlockhash?: string | number | undefined,
+        toBlock?: string | number | undefined
+    ): Promise<Array<TEvent>>
 
-  listeners<TEvent extends TypedEvent>(
-    eventFilter?: TypedEventFilter<TEvent>
-  ): Array<TypedListener<TEvent>>;
-  listeners(eventName?: string): Array<Listener>;
-  removeAllListeners<TEvent extends TypedEvent>(
-    eventFilter: TypedEventFilter<TEvent>
-  ): this;
-  removeAllListeners(eventName?: string): this;
-  off: OnEvent<this>;
-  on: OnEvent<this>;
-  once: OnEvent<this>;
-  removeListener: OnEvent<this>;
+    listeners<TEvent extends TypedEvent>(
+        eventFilter?: TypedEventFilter<TEvent>
+    ): Array<TypedListener<TEvent>>
+    listeners(eventName?: string): Array<Listener>
+    removeAllListeners<TEvent extends TypedEvent>(
+        eventFilter: TypedEventFilter<TEvent>
+    ): this
+    removeAllListeners(eventName?: string): this
+    off: OnEvent<this>
+    on: OnEvent<this>
+    once: OnEvent<this>
+    removeListener: OnEvent<this>
 
-  functions: {
+    functions: {
+        cheaperWithdraw(
+            overrides?: PayableOverrides & { from?: string | Promise<string> }
+        ): Promise<ContractTransaction>
+
+        fund(
+            overrides?: PayableOverrides & { from?: string | Promise<string> }
+        ): Promise<ContractTransaction>
+
+        getAddressToAmountFunded(
+            _funder: string,
+            overrides?: CallOverrides
+        ): Promise<[BigNumber]>
+
+        getFunder(
+            _index: BigNumberish,
+            overrides?: CallOverrides
+        ): Promise<[string]>
+
+        getOwner(overrides?: CallOverrides): Promise<[string]>
+
+        getPriceFeed(overrides?: CallOverrides): Promise<[string]>
+
+        getVersion(overrides?: CallOverrides): Promise<[BigNumber]>
+
+        mINIMUM_USD(overrides?: CallOverrides): Promise<[BigNumber]>
+
+        withdraw(
+            overrides?: PayableOverrides & { from?: string | Promise<string> }
+        ): Promise<ContractTransaction>
+    }
+
     cheaperWithdraw(
-      overrides?: PayableOverrides & { from?: string | Promise<string> }
-    ): Promise<ContractTransaction>;
+        overrides?: PayableOverrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>
 
     fund(
-      overrides?: PayableOverrides & { from?: string | Promise<string> }
-    ): Promise<ContractTransaction>;
+        overrides?: PayableOverrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>
 
-    getVersion(overrides?: CallOverrides): Promise<[BigNumber]>;
+    getAddressToAmountFunded(
+        _funder: string,
+        overrides?: CallOverrides
+    ): Promise<BigNumber>
 
-    s_addressToAmountFunded(
-      arg0: string,
-      overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
+    getFunder(_index: BigNumberish, overrides?: CallOverrides): Promise<string>
 
-    s_funders(arg0: BigNumberish, overrides?: CallOverrides): Promise<[string]>;
+    getOwner(overrides?: CallOverrides): Promise<string>
 
-    s_owner(overrides?: CallOverrides): Promise<[string]>;
+    getPriceFeed(overrides?: CallOverrides): Promise<string>
 
-    s_priceFeed(overrides?: CallOverrides): Promise<[string]>;
+    getVersion(overrides?: CallOverrides): Promise<BigNumber>
 
-    withdraw(
-      overrides?: PayableOverrides & { from?: string | Promise<string> }
-    ): Promise<ContractTransaction>;
-  };
-
-  cheaperWithdraw(
-    overrides?: PayableOverrides & { from?: string | Promise<string> }
-  ): Promise<ContractTransaction>;
-
-  fund(
-    overrides?: PayableOverrides & { from?: string | Promise<string> }
-  ): Promise<ContractTransaction>;
-
-  getVersion(overrides?: CallOverrides): Promise<BigNumber>;
-
-  s_addressToAmountFunded(
-    arg0: string,
-    overrides?: CallOverrides
-  ): Promise<BigNumber>;
-
-  s_funders(arg0: BigNumberish, overrides?: CallOverrides): Promise<string>;
-
-  s_owner(overrides?: CallOverrides): Promise<string>;
-
-  s_priceFeed(overrides?: CallOverrides): Promise<string>;
-
-  withdraw(
-    overrides?: PayableOverrides & { from?: string | Promise<string> }
-  ): Promise<ContractTransaction>;
-
-  callStatic: {
-    cheaperWithdraw(overrides?: CallOverrides): Promise<void>;
-
-    fund(overrides?: CallOverrides): Promise<void>;
-
-    getVersion(overrides?: CallOverrides): Promise<BigNumber>;
-
-    s_addressToAmountFunded(
-      arg0: string,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
-    s_funders(arg0: BigNumberish, overrides?: CallOverrides): Promise<string>;
-
-    s_owner(overrides?: CallOverrides): Promise<string>;
-
-    s_priceFeed(overrides?: CallOverrides): Promise<string>;
-
-    withdraw(overrides?: CallOverrides): Promise<void>;
-  };
-
-  filters: {};
-
-  estimateGas: {
-    cheaperWithdraw(
-      overrides?: PayableOverrides & { from?: string | Promise<string> }
-    ): Promise<BigNumber>;
-
-    fund(
-      overrides?: PayableOverrides & { from?: string | Promise<string> }
-    ): Promise<BigNumber>;
-
-    getVersion(overrides?: CallOverrides): Promise<BigNumber>;
-
-    s_addressToAmountFunded(
-      arg0: string,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
-    s_funders(
-      arg0: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
-    s_owner(overrides?: CallOverrides): Promise<BigNumber>;
-
-    s_priceFeed(overrides?: CallOverrides): Promise<BigNumber>;
+    mINIMUM_USD(overrides?: CallOverrides): Promise<BigNumber>
 
     withdraw(
-      overrides?: PayableOverrides & { from?: string | Promise<string> }
-    ): Promise<BigNumber>;
-  };
+        overrides?: PayableOverrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>
 
-  populateTransaction: {
-    cheaperWithdraw(
-      overrides?: PayableOverrides & { from?: string | Promise<string> }
-    ): Promise<PopulatedTransaction>;
+    callStatic: {
+        cheaperWithdraw(overrides?: CallOverrides): Promise<void>
 
-    fund(
-      overrides?: PayableOverrides & { from?: string | Promise<string> }
-    ): Promise<PopulatedTransaction>;
+        fund(overrides?: CallOverrides): Promise<void>
 
-    getVersion(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        getAddressToAmountFunded(
+            _funder: string,
+            overrides?: CallOverrides
+        ): Promise<BigNumber>
 
-    s_addressToAmountFunded(
-      arg0: string,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+        getFunder(
+            _index: BigNumberish,
+            overrides?: CallOverrides
+        ): Promise<string>
 
-    s_funders(
-      arg0: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+        getOwner(overrides?: CallOverrides): Promise<string>
 
-    s_owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        getPriceFeed(overrides?: CallOverrides): Promise<string>
 
-    s_priceFeed(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        getVersion(overrides?: CallOverrides): Promise<BigNumber>
 
-    withdraw(
-      overrides?: PayableOverrides & { from?: string | Promise<string> }
-    ): Promise<PopulatedTransaction>;
-  };
+        mINIMUM_USD(overrides?: CallOverrides): Promise<BigNumber>
+
+        withdraw(overrides?: CallOverrides): Promise<void>
+    }
+
+    filters: {}
+
+    estimateGas: {
+        cheaperWithdraw(
+            overrides?: PayableOverrides & { from?: string | Promise<string> }
+        ): Promise<BigNumber>
+
+        fund(
+            overrides?: PayableOverrides & { from?: string | Promise<string> }
+        ): Promise<BigNumber>
+
+        getAddressToAmountFunded(
+            _funder: string,
+            overrides?: CallOverrides
+        ): Promise<BigNumber>
+
+        getFunder(
+            _index: BigNumberish,
+            overrides?: CallOverrides
+        ): Promise<BigNumber>
+
+        getOwner(overrides?: CallOverrides): Promise<BigNumber>
+
+        getPriceFeed(overrides?: CallOverrides): Promise<BigNumber>
+
+        getVersion(overrides?: CallOverrides): Promise<BigNumber>
+
+        mINIMUM_USD(overrides?: CallOverrides): Promise<BigNumber>
+
+        withdraw(
+            overrides?: PayableOverrides & { from?: string | Promise<string> }
+        ): Promise<BigNumber>
+    }
+
+    populateTransaction: {
+        cheaperWithdraw(
+            overrides?: PayableOverrides & { from?: string | Promise<string> }
+        ): Promise<PopulatedTransaction>
+
+        fund(
+            overrides?: PayableOverrides & { from?: string | Promise<string> }
+        ): Promise<PopulatedTransaction>
+
+        getAddressToAmountFunded(
+            _funder: string,
+            overrides?: CallOverrides
+        ): Promise<PopulatedTransaction>
+
+        getFunder(
+            _index: BigNumberish,
+            overrides?: CallOverrides
+        ): Promise<PopulatedTransaction>
+
+        getOwner(overrides?: CallOverrides): Promise<PopulatedTransaction>
+
+        getPriceFeed(overrides?: CallOverrides): Promise<PopulatedTransaction>
+
+        getVersion(overrides?: CallOverrides): Promise<PopulatedTransaction>
+
+        mINIMUM_USD(overrides?: CallOverrides): Promise<PopulatedTransaction>
+
+        withdraw(
+            overrides?: PayableOverrides & { from?: string | Promise<string> }
+        ): Promise<PopulatedTransaction>
+    }
 }

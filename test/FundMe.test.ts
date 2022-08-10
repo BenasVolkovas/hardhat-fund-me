@@ -30,7 +30,7 @@ describe("FundMe", () => {
 
     describe("constructor", () => {
         it("sets the aggregator addresses correctly", async () => {
-            const response = await fundMe.s_priceFeed()
+            const response = await fundMe.getPriceFeed()
             assert.equal(response, mockV3Aggregator.address)
         })
     })
@@ -44,7 +44,7 @@ describe("FundMe", () => {
 
         it("Updates the amount funded data structure", async () => {
             await fundMe.fund({ value: ethValue })
-            const response = await fundMe.s_addressToAmountFunded(
+            const response = await fundMe.getAddressToAmountFunded(
                 deployer.address
             )
             assert.equal(response.toString(), ethValue.toString())
@@ -52,7 +52,7 @@ describe("FundMe", () => {
 
         it("Adds funder to array of funders", async () => {
             await fundMe.fund({ value: ethValue })
-            const response = await fundMe.s_funders(0)
+            const response = await fundMe.getFunder(0)
             assert.equal(response, deployer.address)
         })
     })
@@ -126,34 +126,34 @@ describe("FundMe", () => {
                 startingFundMeBalance.add(startingDeployerBalance).toString(),
                 endingDeployerBalance.add(withdrawGasCost).toString()
             )
-            await expect(fundMe.s_funders(0)).to.be.reverted
+            await expect(fundMe.getFunder(0)).to.be.reverted
             assert.equal(
                 (
-                    await fundMe.s_addressToAmountFunded(accounts[1].address)
+                    await fundMe.getAddressToAmountFunded(accounts[1].address)
                 ).toString(),
                 "0"
             )
             assert.equal(
                 (
-                    await fundMe.s_addressToAmountFunded(accounts[2].address)
+                    await fundMe.getAddressToAmountFunded(accounts[2].address)
                 ).toString(),
                 "0"
             )
             assert.equal(
                 (
-                    await fundMe.s_addressToAmountFunded(accounts[3].address)
+                    await fundMe.getAddressToAmountFunded(accounts[3].address)
                 ).toString(),
                 "0"
             )
             assert.equal(
                 (
-                    await fundMe.s_addressToAmountFunded(accounts[4].address)
+                    await fundMe.getAddressToAmountFunded(accounts[4].address)
                 ).toString(),
                 "0"
             )
             assert.equal(
                 (
-                    await fundMe.s_addressToAmountFunded(accounts[5].address)
+                    await fundMe.getAddressToAmountFunded(accounts[5].address)
                 ).toString(),
                 "0"
             )
@@ -162,7 +162,7 @@ describe("FundMe", () => {
             const attacker = accounts[1]
             await expect(
                 fundMe.connect(attacker).withdraw()
-            ).to.be.revertedWith("FundMe__NoOwner")
+            ).to.be.revertedWith("FundMe__NotOwner()")
         })
     })
 })
