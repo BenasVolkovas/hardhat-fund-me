@@ -32,6 +32,7 @@
     "lint:fix": "yarn solhint 'contracts/**/*.sol' --fix",
     "format": "yarn prettier --write .",
     "coverage": "yarn hardhat coverage",
-    "typechain": "yarn hardhat typechain"
+    "typechain": "yarn hardhat typechain",
+    "slither": "slither . --solc-remaps '@openzeppelin=node_modules/@openzeppelin @chainlink=node_modules/@chainlink' --exclude naming-convention,external-function,low-level-calls"
   }
 }
